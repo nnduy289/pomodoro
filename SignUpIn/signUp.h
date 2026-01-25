@@ -27,4 +27,6 @@ bool checkValidInfo(string &info);
 bool checkExistInfo(string &info);
 void signUp(string& username, string& password);
 
+bool signIn(string& username, string& password);
+void saveToFile(string& username, string& password);
 #endif

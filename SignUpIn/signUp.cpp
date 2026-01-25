@@ -47,11 +47,20 @@ bool checkValidInfo(string &info){
 
 }
 bool checkExistInfo(string &info){
-    map<string, string>::iterator it;
-    for(it = userAccount.begin(); it!= userAccount.end(); it++){
-        if(it->first == info)   return false;
+    string myText;
+    ifstream myReadFile("account.txt");
+    while(getline(myReadFile, myText)){
+        stringstream ss(myText);
+        string word;
+        while(ss >> word){
+            if(word == info){
+                myReadFile.close();
+                return true;
+            }
+        }
     }
-    return true;
+    myReadFile.close();
+    return false;
 }
 
 void saveToFile(string& username, string& password){
@@ -63,11 +72,13 @@ void saveToFile(string& username, string& password){
 //sign up
 void signUp(string& username, string& password){
     cout << "Enter user name: " << enterFromUser(username) << '\n';
-    if(!checkExistInfo(username)){
+    if(checkExistInfo(username)){
         cout << "Exist user name, use other name!" << '\n';
+        return;
     }
+    cout << "Valid user name!" << '\n';
     cout << "Enter password: " << enterFromUser(password) << '\n';
-
+    cout << "Sign up successfully!" << '\n';
     userAccount.insert(make_pair(username, password));
     saveToFile(username, password);
 }
