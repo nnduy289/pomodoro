@@ -3,6 +3,50 @@
 
 vector<string> vecToDo;
 
+//get option from 1 
+int getOptionFromUser(){
+    int counter = 0;
+    string option;
+    bool flagIsInt;
+    do{
+        flagIsInt = true;
+        getline(cin, option);
+        stringstream ss;
+        string word;
+        while(ss >> word){
+            counter++;
+            if(counter > 1){
+                cout << "Invalid option\n";
+                flagIsInt = false;
+                break;
+            }
+        }
+        //if flag is true, continue check each alphabet in string, otherwise loop again
+        if(flagIsInt){
+            for(int i = 0; i < option.length(); i++){
+                if(option[i] < '0' || option[i] > '9'){
+                cout << "Invalid option\n";
+                flagIsInt = false;
+                break;
+                }
+            }
+        }
+        
+    }while(!flagIsInt);
+
+    return stoi(option);
+}
+
+void showMenuTimer(){
+    cout << "======================" << '\n';
+    cout << "=========TIMER==========" << '\n';
+    cout << "1. Set time for flow" << '\n';
+    cout << "2. Set time for relax" << '\n';
+    cout << "3. Exit" << '\n';
+    cout << "======================" << '\n';
+    cout << "Choose your option: ";
+}
+
 void showMenuTodo(){
     cout << "======================" << '\n';
     cout << "=========TO DO LIST==========" << '\n';
@@ -13,6 +57,7 @@ void showMenuTodo(){
     cout << "======================" << '\n';
     cout << "Choose your option: ";
 }
+
 
 class User{
     private:
@@ -29,7 +74,9 @@ class User{
         void setToDoList();
         void getToDoList();
         void removeToDoList();
-      //  void setTimer();
+      
+        void setTimer();
+        void getRemainTimer();
 };
 
 void User::setUserName(string &userName){
@@ -56,7 +103,7 @@ void User::getToDoList(){
     vector<string>::iterator it;
     int counter = 0;
     if(vecToDo.size() == 0){
-        cout << "Please add your work to do!" << '\n';
+        cout << "Empty ToDoList, please add your work to do!" << '\n';
         return;
     }
     for(it = vecToDo.begin(); it != vecToDo.end(); it++){
@@ -65,17 +112,24 @@ void User::getToDoList(){
 }
 
 void User::removeToDoList(){
-    char option;
+    if(vecToDo.size() == 0){
+        cout << "Don't have anything to remove here, add your work please!\n";
+        return;
+    }
+    getToDoList();
     cout << "What thing you want to remove ? \n";
+    cout << "Choose the line: ";
+    int option;
     do{
-        cin >> option;
-        cin.ignore();
-        if(option < '1' || option > '9'){
-            cout << "Invalid option\n";
+        option = getOptionFromUser();
+        if(option > vecToDo.size()){
+            cout << "Please Enter exact line want to erase: ";
         }
-    }while(option < '1' || option > '9');
-    int num = option - 48;
-    vecToDo.erase(vecToDo.begin()+ num -1);
+    } 
+    while(option > vecToDo.size());
+        
+    vecToDo.erase(vecToDo.begin()+ option -1);
+    getToDoList();
 }
 
 bool signIn(string& username, string& password){
@@ -103,6 +157,14 @@ bool signIn(string& username, string& password){
     return false;
 }
 
+void User::setTimer(){
+
+}
+
+void User::getRemainTimer(){
+    
+}
+
 void handleUserAfterSignIn(string &username, string &password){
     User pom;
     pom.setUserName(username);
@@ -110,11 +172,10 @@ void handleUserAfterSignIn(string &username, string &password){
 
     while(true){
         showMenuTodo();
-        int option;
-        cin >> option; //cần viết một hàm để check input nhập vào từ user vụ option này
-        cin.ignore();
+        int option = getOptionFromUser();
         switch(option){
             case 1:
+                cout << "What do you want to do ? Type below:\n";
                 pom.setToDoList();
                 break;
             case 2:
@@ -122,6 +183,7 @@ void handleUserAfterSignIn(string &username, string &password){
                 break;
             case 3:
                 pom.getToDoList();
+                break;
             case 4:
                 return;
             default:

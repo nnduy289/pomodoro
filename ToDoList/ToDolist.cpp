@@ -15,8 +15,7 @@ int main(void){
         int option;
     while(true){
         showMainMenu();
-        cin >> option;
-        cin.ignore(); //clear buffer
+        option = getOptionFromUser();
         switch(option){
             case 1:
                 signUp(username, password);
