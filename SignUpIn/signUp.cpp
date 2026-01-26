@@ -1,21 +1,7 @@
-#include "signUp.h"
+#include "signUpIn.h"
 
 ofstream myFile;
 map<string, string> userAccount;
-
-void User::setUserName(string &userName){
-    this->userName = userName;
-}
-string User::getUserName(){
-    return this->userName;
-}
-void User::setPassWord(string &passWord){
-    this->passWord = passWord;
-}
-
-string User::getPassWord(){
-    return this->passWord;
-}
 
 string enterFromUser(string &info){
     bool flagValid;
@@ -71,13 +57,16 @@ void saveToFile(string& username, string& password){
 
 //sign up
 void signUp(string& username, string& password){
-    cout << "Enter user name: " << enterFromUser(username) << '\n';
+    cout << "Enter user name: ";
+    enterFromUser(username);
     if(checkExistInfo(username)){
         cout << "Exist user name, use other name!" << '\n';
         return;
     }
     cout << "Valid user name!" << '\n';
-    cout << "Enter password: " << enterFromUser(password) << '\n';
+    cout << "Enter password: ";
+    enterFromUser(password);
+
     cout << "Sign up successfully!" << '\n';
     userAccount.insert(make_pair(username, password));
     saveToFile(username, password);

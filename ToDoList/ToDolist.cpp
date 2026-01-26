@@ -1,4 +1,4 @@
-#include "../SignUpIn/signUp.h"
+#include "../SignUpIn/signUpIn.h"
 
 void showMainMenu(){
     cout << "======================" << '\n';
@@ -24,6 +24,7 @@ int main(void){
             case 2:
                 if(signIn(username, password)){
                     cout << "Sign in successfully!" << '\n';
+                    handleUserAfterSignIn(username, password);
                 }
                 else{
                     cout << "Sign in failed!" << '\n';
