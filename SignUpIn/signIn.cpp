@@ -1,11 +1,14 @@
 #include "signUpIn.h"
+#include "../Timer/timer.h"
 #include <vector>
 
 vector<string> vecToDo;
 
+
 //get option from 1 
 int getOptionFromUser(){
     int counter = 0;
+    int optionNumber;
     string option;
     bool flagIsInt;
     do{
@@ -31,10 +34,19 @@ int getOptionFromUser(){
                 }
             }
         }
-        
+    
+    
     }while(!flagIsInt);
+    optionNumber = stoi(option);
+    if(optionNumber >= 1){
+        return optionNumber;
+    }else{
+        getOptionFromUser();
+    }
+}
 
-    return stoi(option);
+void showMenu(){
+    
 }
 
 void showMenuTimer(){
@@ -42,7 +54,8 @@ void showMenuTimer(){
     cout << "=========TIMER==========" << '\n';
     cout << "1. Set time for flow" << '\n';
     cout << "2. Set time for relax" << '\n';
-    cout << "3. Exit" << '\n';
+    cout << "3. Start YOUR POM ?" << '\n';
+    cout << "4. Exit" << '\n';
     cout << "======================" << '\n';
     cout << "Choose your option: ";
 }
@@ -63,7 +76,8 @@ class User{
     private:
         string      userName;
         string      passWord;
-        int32_t     counterStreak;
+        int         counterStreak;
+        int         time;
     
     public:
         void setUserName(string &userName);
@@ -76,7 +90,7 @@ class User{
         void removeToDoList();
       
         void setTimer();
-        void getRemainTimer();
+        void startTimer();
 };
 
 void User::setUserName(string &userName){
@@ -158,11 +172,11 @@ bool signIn(string& username, string& password){
 }
 
 void User::setTimer(){
-
+    this->time = getOptionFromUser();
 }
 
-void User::getRemainTimer(){
-    
+void User::startTimer(){
+    countDownTimer(this->time);
 }
 
 void handleUserAfterSignIn(string &username, string &password){
@@ -170,19 +184,40 @@ void handleUserAfterSignIn(string &username, string &password){
     pom.setUserName(username);
     pom.setPassWord(password);
 
-    while(true){
-        showMenuTodo();
+    // while(true){
+    //     showMenuTodo();
+    //     int option = getOptionFromUser();
+    //     switch(option){
+    //         case 1:
+    //             cout << "What do you want to do ? Type below:\n";
+    //             pom.setToDoList();
+    //             break;
+    //         case 2:
+    //             pom.removeToDoList();
+    //             break;
+    //         case 3:
+    //             pom.getToDoList();
+    //             break;
+    //         case 4:
+    //             return;
+    //         default:
+    //             break;
+            
+    //     }
+    // }
+     while(true){
+        showMenuTimer();
         int option = getOptionFromUser();
         switch(option){
             case 1:
-                cout << "What do you want to do ? Type below:\n";
-                pom.setToDoList();
+                cout << "How many time do you want to set? Type below:\n";
+                pom.setTimer();
                 break;
             case 2:
-                pom.removeToDoList();
                 break;
             case 3:
-                pom.getToDoList();
+                cout << "START~!!!\n";
+                pom.startTimer();
                 break;
             case 4:
                 return;
