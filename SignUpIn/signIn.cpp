@@ -27,7 +27,7 @@ int getOptionFromUser(){
         //if flag is true, continue check each alphabet in string, otherwise loop again
         if(flagIsInt){
             for(int i = 0; i < option.length(); i++){
-                if(option[i] < '0' || option[i] > '9'){
+                if(option[i] < '1' || option[i] > '9'){
                 cout << "Invalid option\n";
                 flagIsInt = false;
                 break;
@@ -46,7 +46,13 @@ int getOptionFromUser(){
 }
 
 void showMenu(){
-    
+    cout << "======================" << '\n';
+    cout << "=====================" << '\n';
+    cout << "1. Set your ToDoList" << '\n';
+    cout << "2. Set your timer" << '\n';
+    cout << "3. Exit" << '\n';
+    cout << "======================" << '\n';
+    cout << "Choose your option: ";
 }
 
 void showMenuTimer(){
@@ -54,6 +60,7 @@ void showMenuTimer(){
     cout << "=========TIMER==========" << '\n';
     cout << "1. Set time for flow" << '\n';
     cout << "2. Set time for relax" << '\n';
+    cout << "3. Set your daily goal!";
     cout << "3. Start YOUR POM ?" << '\n';
     cout << "4. Exit" << '\n';
     cout << "======================" << '\n';
@@ -77,8 +84,9 @@ class User{
         string      userName;
         string      passWord;
         int         counterStreak;
-        int         time;
-    
+        int         time = 0;
+        int         dailyTotalTime = 0;
+        int         dailyGoalTime = 0;
     public:
         void setUserName(string &userName);
         string getUserName();
@@ -90,6 +98,7 @@ class User{
         void removeToDoList();
       
         void setTimer();
+        int getTimer();
         void startTimer();
 };
 
@@ -136,7 +145,7 @@ void User::removeToDoList(){
     int option;
     do{
         option = getOptionFromUser();
-        if(option > vecToDo.size()){
+        if(option > vecToDo.size() || option == 0){
             cout << "Please Enter exact line want to erase: ";
         }
     } 
@@ -179,35 +188,15 @@ void User::startTimer(){
     countDownTimer(this->time);
 }
 
-void handleUserAfterSignIn(string &username, string &password){
-    User pom;
-    pom.setUserName(username);
-    pom.setPassWord(password);
+int User::getTimer(){
+    return this->time;
+}
 
-    // while(true){
-    //     showMenuTodo();
-    //     int option = getOptionFromUser();
-    //     switch(option){
-    //         case 1:
-    //             cout << "What do you want to do ? Type below:\n";
-    //             pom.setToDoList();
-    //             break;
-    //         case 2:
-    //             pom.removeToDoList();
-    //             break;
-    //         case 3:
-    //             pom.getToDoList();
-    //             break;
-    //         case 4:
-    //             return;
-    //         default:
-    //             break;
-            
-    //     }
-    // }
-     while(true){
+void userTimer(User &pom){
+    while(true){
         showMenuTimer();
         int option = getOptionFromUser();
+        
         switch(option){
             case 1:
                 cout << "How many time do you want to set? Type below:\n";
@@ -216,6 +205,10 @@ void handleUserAfterSignIn(string &username, string &password){
             case 2:
                 break;
             case 3:
+                if(pom.getTimer() <= 0){
+                    cout << "How many time do you want to set? Type below:\n";
+                    pom.setTimer();
+                }
                 cout << "START~!!!\n";
                 pom.startTimer();
                 break;
@@ -223,7 +216,54 @@ void handleUserAfterSignIn(string &username, string &password){
                 return;
             default:
                 break;
-            
         }
     }
+}
+void userTodo(User &pom){
+    while(true){
+    showMenuTodo();
+        int option = getOptionFromUser();
+            switch(option){
+            case 1:
+                cout << "What do you want to do ? Type below:\n";
+                pom.setToDoList();
+                break;
+            case 2:
+                pom.removeToDoList();
+                break;
+            case 3:
+                pom.getToDoList();
+                break;
+            case 4:
+                return;
+            default:
+                break;
+            
+        }
+    }    
+}
+void handleUserAfterSignIn(string &username, string &password){
+    User pom;
+    pom.setUserName(username);
+    pom.setPassWord(password);
+
+    while(true){
+        showMenu();
+        int option = getOptionFromUser();
+        switch (option)
+        {
+        case 1:
+            userTodo(pom);
+            break;
+        case 2:
+            userTimer(pom);
+            break;
+        case 3:
+            return;
+        default:
+            cout << "Invalid option, type again\n";
+            break;
+        }
+    }
+     
 }
