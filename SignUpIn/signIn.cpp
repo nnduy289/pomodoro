@@ -60,9 +60,9 @@ void showMenuTimer(){
     cout << "=========TIMER==========" << '\n';
     cout << "1. Set time for flow" << '\n';
     cout << "2. Set time for relax" << '\n';
-    cout << "3. Set your daily goal!";
-    cout << "3. Start YOUR POM ?" << '\n';
-    cout << "4. Exit" << '\n';
+    cout << "3. Set your daily goal!\n";
+    cout << "4. Start YOUR POM ?" << '\n';
+    cout << "5. Exit" << '\n';
     cout << "======================" << '\n';
     cout << "Choose your option: ";
 }
@@ -205,6 +205,8 @@ void userTimer(User &pom){
             case 2:
                 break;
             case 3:
+                break;
+            case 4:
                 if(pom.getTimer() <= 0){
                     cout << "How many time do you want to set? Type below:\n";
                     pom.setTimer();
@@ -212,7 +214,7 @@ void userTimer(User &pom){
                 cout << "START~!!!\n";
                 pom.startTimer();
                 break;
-            case 4:
+            case 5:
                 return;
             default:
                 break;
