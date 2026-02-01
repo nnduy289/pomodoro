@@ -172,16 +172,17 @@ bool signIn(string& username, string& password){
 
     string myText;
     ifstream myReadFile("account.txt");
-    getline(myReadFile, myText);
+    while(getline(myReadFile, myText)){
     stringstream ss(myText);
     string word;
-    while(ss >> word){
-        if(word == username){
-            ss >> word; //skip "Password:"
-            ss >> word; //get password
-            if(word == password){
-                myReadFile.close();
-                return true;
+        while(ss >> word){
+            if(word == username){
+                ss >> word; //skip "Password:"
+                ss >> word; //get password
+                if(word == password){
+                    myReadFile.close();
+                    return true;
+                }
             }
         }
     }
@@ -241,7 +242,6 @@ void User::saveStreakToFile(){
 }
 
 void User::restoreStreakFromFile(){
-    saveStreakToFile();
     string myText;
     ifstream myReadFile("streak.txt");
     while(getline(myReadFile, myText)){
