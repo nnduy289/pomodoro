@@ -1,7 +1,7 @@
 CXX = g++
 CXXFLAGS = -Wall -std=c++17 -g
 
-SRC = ToDoList/ToDolist.cpp SignUpIn/signUp.cpp SignUpIn/signIn.cpp Timer/timer.cpp
+SRC = ToDoList/ToDolist.cpp SignUpIn/signUp.cpp SignUpIn/signIn.cpp Timer/timer.cpp DateTime/dateTime.cpp
 OUT = app
 
 all:
