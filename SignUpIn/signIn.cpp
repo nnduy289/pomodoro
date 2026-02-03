@@ -1,9 +1,9 @@
 #include "signUpIn.h"
 #include "../Timer/timer.h"
 #include <vector>
+#include <thread>
 
 vector<string> vecToDo;
-
 
 //get option from 1 
 int getOptionFromUser(){
@@ -61,7 +61,8 @@ void showMenuTimer(){
     cout << "1. Set your Pomo" << '\n';
     cout << "2. Set your daily goal time!\n";
     cout << "3. Start YOUR POM ?" << '\n';
-    cout << "4. Exit" << '\n';
+    cout << "4. Check your streak!" << '\n';
+    cout << "5. Exit" << '\n';
     cout << "======================" << '\n';
     cout << "Choose your option: ";
 }
@@ -266,6 +267,7 @@ void User::setStreak(){
 }
 
 void userTimer(User &pom){
+    thread t1;
     while(true){
         showMenuTimer();
         int option = getOptionFromUser();
@@ -283,10 +285,13 @@ void userTimer(User &pom){
                     pom.setTimer();
                 }
                 cout << "START~!!!\n";
-                pom.startTimer();
-                pom.checkStreak();
+                t1 = thread(&User::startTimer, &pom);
+                t1.detach();  
                 break;
             case 4:
+                pom.checkStreak();
+                break;
+            case 5:
                 return;
             default:
                 break;
