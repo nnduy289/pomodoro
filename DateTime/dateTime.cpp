@@ -13,9 +13,3 @@ struct tm datetime = *localtime(&timestamp);
 
     std::cout << "Current Date and Time: " << day << "/" << month << "/" << year << " " << hour << ":" << minute << ":" << second << std::endl;
 }
-
-int main(void){
-    int day, month, year, hour, minute, second;
-    getCurrentDateTime(day, month, year, hour, minute, second);
-    return 0;
-}

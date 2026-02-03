@@ -87,6 +87,8 @@ class User{
         int         timeRelax = 0;
         int         dailyTotalTime = 0;
         int         dailyGoalTime = 0;
+        bool        flagPomoDone = false;
+        
     public:
         void setUserName(string &userName);
         string getUserName();
@@ -218,6 +220,7 @@ int User::getDialyGoalTime(){
 
 void User::checkStreak(){
     restoreStreakFromFile();
+    
     this->dailyTotalTime += this->timeFocus;
     if(this->dailyTotalTime >= this->dailyGoalTime && this->dailyGoalTime > 0){
         this->counterStreak++;
